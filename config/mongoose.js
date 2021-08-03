@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 mongoose.connect('mongodb://localhost/url-shortener', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.set('useCreateIndex', true)
 
 const db = mongoose.connection
 

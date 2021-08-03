@@ -24,11 +24,24 @@ app.post('/', [
     const { url } = req.body
     const protocol = req.protocol
     const host = req.headers.host
-    const url = req.originalUrl
-    Url.find({ url })
-        .then(result => {
-            const shortener = `${protocol}://${host}${url}${result[0].shortUrl}`
-            res.render('result', { shortener })
+    const oUrl = req.originalUrl
+    Url.find()
+        .then(results => {
+            const result = results.find(result => result.url === url)
+            if (result) {
+                const shortener = `${protocol}://${host}${oUrl}${result.shortUrl}`
+                res.render('result', { shortener })
+            } else {
+                const shortUrl = randomStr(...results)
+                Url.create({
+                    url,
+                    shortUrl
+                })
+                    .then(() => {
+                        const shortener = `${protocol}://${host}${oUrl}${shortUrl}`
+                        res.render('result', { shortener })
+                    }).catch(err => console.log(err))
+            }
         }).catch(err => console.log(err))
 })
 
@@ -36,7 +49,7 @@ app.get('/:shortUrl', (req, res) => {
     const shortUrl = req.params.shortUrl
     Url.find({ shortUrl })
         .then(result => {
-            res.redirect(`${result[0].url}`)
+            res.redirect(`${result.url}`)
         }).catch(err => console.log(err))
 })
 
