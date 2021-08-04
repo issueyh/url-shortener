@@ -10,6 +10,7 @@
 
 ## 專案畫面
 ![img](https://github.com/issueyh/url-shortener/blob/main/public/img/url-shortener.jpg)
+![img](https://github.com/issueyh/url-shortener/blob/main/public/img/heroku-urlShortener.jpg)
 
 ## 安裝流程
 1. 打開你的 terminal，Clone 此專案至本機電腦
