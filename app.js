@@ -30,7 +30,7 @@ app.post('/', [
             const result = results.find(result => result.url === url)
             if (result) {
                 const shortener = `${protocol}://${host}${oUrl}${result.shortUrl}`
-                res.render('result', { shortener })
+                return res.render('result', { shortener })
             } else {
                 const shortUrl = randomStr(...results)
                 Url.create({
@@ -49,7 +49,7 @@ app.get('/:shortUrl', (req, res) => {
     const shortUrl = req.params.shortUrl
     Url.find({ shortUrl })
         .then(result => {
-            res.redirect(`${result.url}`)
+            res.redirect(`${result[0].url}`)
         }).catch(err => console.log(err))
 })
 
